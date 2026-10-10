@@ -1,7 +1,7 @@
 // "Mates sin palabras" — Zenón y la pizza.
 // The whole film is a pure function of time: drawFrame(g, t).
 import { createCanvas } from '@napi-rs/canvas';
-import { C, W, H, FLOOR, X0, X1, L, BAR_Y, BAR_H, EQ_Y, CHAR_SCALE as CS, posOf, fracColor } from './style.js';
+import { C, W, H, FLOOR, X0, X1, L, BAR_Y, BAR_H, EQ_Y, CHAR_SCALE as CS, WATERMARK, FONT, posOf, fracColor } from './style.js';
 import * as U from './util.js';
 import { clamp, lerp, ease, track, over, range01, mix, rgba, TAU } from './util.js';
 import { drawCharacter, anchors, POSES, runPose, expr, RIG } from './character.js';
@@ -1335,12 +1335,12 @@ const camTrack = track([
   [1.42, { z: 1.75, x: 840, y: 1120 }],
   [1.82, { z: 1, x: W / 2, y: H / 2 }, 'inOutQuad'],
   [T.tantrum, { z: 1, x: W / 2, y: H / 2 }],
-  [T.tantrum + 0.35, { z: 1.07, x: 640, y: 1060 }, 'outCubic'],
-  [T.reveal - 0.1, { z: 1.07, x: 640, y: 1060 }],
+  [T.tantrum + 0.35, { z: 1.07, x: 640, y: 1080 }, 'outCubic'],
+  [T.reveal - 0.1, { z: 1.07, x: 640, y: 1080 }],
   [T.reveal + 0.5, { z: 1, x: W / 2, y: H / 2 }, 'inOutCubic'],
   [T.deadpan - 0.02, { z: 1, x: W / 2, y: H / 2 }],
-  [T.deadpan + 0.08, { z: 1.32, x: 700, y: 1010 }, 'outQuart'],
-  [T.lookMini + 0.25, { z: 1.32, x: 700, y: 1010 }],
+  [T.deadpan + 0.08, { z: 1.32, x: 700, y: 920 }, 'outQuart'],
+  [T.lookMini + 0.25, { z: 1.32, x: 700, y: 920 }],
   [T.lookMini + 0.55, { z: 1, x: W / 2, y: H / 2 }, 'inOutCubic'],
   [T.end, { z: 1, x: W / 2, y: H / 2 }],
 ]);
@@ -1460,4 +1460,27 @@ export function drawFrame(g, t) {
   // screen-space overlays
   drawLens(g, t, anc.hand);
   drawRewindOverlay(g, t);
+  drawWatermark(g);
+}
+
+// ------------------------------------------------------------------ watermark
+let watermarkText = WATERMARK.text;
+export function setWatermark(text) {
+  watermarkText = text || null;
+}
+function drawWatermark(g) {
+  if (!watermarkText) return;
+  g.save();
+  g.globalAlpha = WATERMARK.alpha;
+  g.font = `${WATERMARK.size}px ${FONT}`;
+  g.textAlign = 'center';
+  g.textBaseline = 'middle';
+  // soft halo so it stays readable when something passes behind it
+  g.lineJoin = 'round';
+  g.strokeStyle = C.bg;
+  g.lineWidth = WATERMARK.size * 0.22;
+  g.strokeText(watermarkText, WATERMARK.x, WATERMARK.y);
+  g.fillStyle = C.ink;
+  g.fillText(watermarkText, WATERMARK.x, WATERMARK.y);
+  g.restore();
 }

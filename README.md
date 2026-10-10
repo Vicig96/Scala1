@@ -8,9 +8,12 @@ la paradoja de Zenón contada con un monigote, una pizza y la serie
 - `out/zenon_pizza_sin_audio.mp4`: la misma imagen sin sonido (para poner audio propio en la red social).
 - `out/poster.png`: fotograma para la miniatura.
 
+Ambos vídeos y la miniatura llevan la marca de agua **AntonioSumaySigue** arriba en el centro,
+semitransparente y fuera de las zonas que tapan los botones y textos de TikTok, Reels y Shorts.
+
 Todo se genera por código: animación 2D vectorial (Skia vía `@napi-rs/canvas`) y banda sonora
-sintetizada (sin samples ni música de terceros). No lleva texto, solo símbolos matemáticos (0, 1,
-fracciones, +, =, ⋯, ∞, ×2).
+sintetizada (sin samples ni música de terceros). Aparte de la marca de agua, no lleva texto: solo
+símbolos matemáticos (0, 1, fracciones, +, =, ⋯, ∞, ×2).
 
 ## Guion visual
 
@@ -43,7 +46,12 @@ node render.js --preview                # media resolución a 30 fps, rápido
 node render.js --sheet 0:32:1           # hoja de contactos (out/sheet.png)
 node render.js --stills 4.5,12,20.4     # fotogramas sueltos en PNG
 node render.js --audio                  # solo la banda sonora (WAV)
+node render.js --watermark "@otro"      # cambiar el texto de la marca de agua
+node render.js --no-watermark           # sin marca de agua
 ```
+
+El texto, la posición, el tamaño y la opacidad de la marca de agua están en `WATERMARK`
+(`src/style.js`).
 
 ## Estructura
 

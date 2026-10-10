@@ -4,12 +4,13 @@
 //   node render.js --stills 1,4.5  -> out/stills/*.png
 //   node render.js --sheet 0:32:1  -> out/sheet.png (contact sheet)
 //   node render.js --fps 30 --preview  (half resolution, quick check)
+//   node render.js --watermark "@usuario" | --no-watermark
 import { createCanvas } from '@napi-rs/canvas';
 import { spawn } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { drawFrame, DURATION, FPS_DEFAULT } from './src/scene.js';
+import { drawFrame, setWatermark, DURATION, FPS_DEFAULT } from './src/scene.js';
 import { W, H } from './src/style.js';
 import { renderAudio } from './src/audio.js';
 
@@ -26,6 +27,8 @@ const opt = (name, def) => {
 };
 
 const preview = !!opt('preview', false);
+if (opt('no-watermark', false)) setWatermark(null);
+else if (typeof opt('watermark', null) === 'string') setWatermark(opt('watermark'));
 const fps = Number(opt('fps', preview ? 30 : FPS_DEFAULT));
 const scale = preview ? 0.5 : 1;
 

@@ -62,3 +62,7 @@ export const BAR_H = 50;
 export const EQ_Y = 505;
 export const CHAR_SCALE = 1.22;
 export const posOf = (frac) => X0 + L * frac; // x for a fraction of the run
+
+// Creator watermark (screen space, top centre: clear of the TikTok / Reels /
+// Shorts UI and of the animation). Override with --watermark / --no-watermark.
+export const WATERMARK = { text: 'AntonioSumaySigue', x: W / 2, y: 250, size: 40, alpha: 0.42 };
