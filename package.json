@@ -1,0 +1,15 @@
+{
+  "name": "mates-sin-palabras-zenon",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Mates sin palabras: la paradoja de Zenón con una pizza (vídeo vertical 1080x1920)",
+  "scripts": {
+    "render": "node render.js",
+    "preview": "node render.js --preview"
+  },
+  "dependencies": {
+    "@fontsource/fredoka": "^5.2.8",
+    "@napi-rs/canvas": "^1.0.11"
+  }
+}

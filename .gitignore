@@ -1,0 +1,6 @@
+node_modules/
+out/*.wav
+out/*.png
+!out/poster.png
+out/stills/
+out/preview*.mp4
